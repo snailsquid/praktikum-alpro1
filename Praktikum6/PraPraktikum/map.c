@@ -7,6 +7,8 @@ Map *create_map(int capacity)
   if (m == NULL)
     return NULL;
   m->entries = (MapEntry *)malloc(sizeof(MapEntry) * capacity);
+  if (m->entries == NULL)
+    return false;
   m->capacity = capacity;
   m->size = 0;
   return m;
@@ -17,10 +19,29 @@ bool map_insert(Map *map, int key, const char *value)
   {
     return false;
   }
+
+  for (int i = 0; i < map->size; i++)
+  {
+    if (map->entries[i].key == key)
+    {
+      free(map->entries[i].value);
+      map->entries[i].value = malloc(strlen(value));
+      if (map->entries[i].value == NULL)
+        return false;
+      strcpy(map->entries[i].value, value);
+      return true;
+    }
+  }
+
   int index = map->size;
   map->entries[index].key = key;
 
+  if (map->size >= map->capacity)
+    return false;
+
   map->entries[index].value = malloc(strlen(value) + 1);
+  if (map->entries == NULL)
+    return false;
   strcpy(map->entries[index].value, value);
   map->size++;
   return true;
@@ -40,29 +61,21 @@ char *map_get(const Map *map, int key)
 }
 bool map_delete(Map *map, int key)
 {
-  int index = -1;
   for (int i = 0; i < map->size; i++)
   {
     MapEntry entry = map->entries[i];
     if (entry.key == key)
     {
-      index = i;
-      break;
+      free(map->entries[i].value);
+      for (int j = i + 1; j < map->size; j++)
+      {
+        map->entries[j - 1] = map->entries[j];
+      }
+      map->size--;
+      return true;
     }
   }
-  if (index != -1)
-  {
-    for (int i = index + 1; i < map->size; i++)
-    {
-      map->entries[i - 1] = map->entries[i];
-    }
-    map->size--;
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return false;
 }
 int map_size(const Map *map)
 {

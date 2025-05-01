@@ -6,9 +6,7 @@ void CreateEmpty(Set *S)
 }
 boolean IsEmpty(Set S)
 {
-  if (S.Count == 0)
-    return true;
-  return false;
+  return (S.Count == 0);
 }
 void Insert(Set *S, int Elmt)
 {
@@ -43,9 +41,7 @@ void Delete(Set *S, int Elmt)
 
 boolean IsFull(Set S)
 {
-  if (S.Count >= MaxEl)
-    return true;
-  return false;
+  return (S.Count >= MaxEl);
 }
 boolean IsMember(Set S, int Elmt)
 {
@@ -59,30 +55,30 @@ boolean IsMember(Set S, int Elmt)
   return false;
 }
 
-int main()
-{
-  Set s;
-  CreateEmpty(&s);
-  Insert(&s, 2);
-  Insert(&s, 2);
-  Insert(&s, 5);
-  Insert(&s, 3);
-  Insert(&s, 4);
-  Insert(&s, 4);
-  Delete(&s, 2);
-  Insert(&s, 3);
-  for (int i = 0; i < s.Count; i++)
-  {
-    printf("[%d] %d\n", i, s.Elements[i]);
-  }
-  if (IsFull(s))
-  {
-    printf("full");
-  }
-  else
-    printf("not full");
-  if (IsMember(s, 5))
-    printf("5 is member");
-  else
-    printf("5 is not member");
-}
+// int main()
+// {
+//   Set s;
+//   CreateEmpty(&s);
+//   Insert(&s, 2);
+//   Insert(&s, 2);
+//   Insert(&s, 5);
+//   Insert(&s, 3);
+//   Insert(&s, 4);
+//   Insert(&s, 4);
+//   Delete(&s, 2);
+//   Insert(&s, 3);
+//   for (int i = 0; i < s.Count; i++)
+//   {
+//     printf("[%d] %d\n", i, s.Elements[i]);
+//   }
+//   if (IsFull(s))
+//   {
+//     printf("full");
+//   }
+//   else
+//     printf("not full");
+//   if (IsMember(s, 5))
+//     printf("5 is member");
+//   else
+//     printf("5 is not member");
+// }

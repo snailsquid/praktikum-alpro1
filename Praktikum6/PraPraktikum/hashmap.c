@@ -1,4 +1,5 @@
 #include "hashmap.h"
+#include <stdio.h>
 void CreateEmpty(HashMap *hm)
 {
   hm->Count = Nil;
@@ -11,8 +12,16 @@ void CreateEmpty(HashMap *hm)
   }
 }
 
+address Hash(keytype K)
+{
+  return (K % MaxEl);
+}
+
 valuetype Value(HashMap M, int key)
 {
+  address h = Hash(key);
+  if (M.Elements[h].key == key)
+    return M.Elements[h].value;
   for (int i = 0; i < M.Count; i++)
   {
     if (M.Elements[i].key == key)
@@ -22,18 +31,38 @@ valuetype Value(HashMap M, int key)
   }
   return Undefined;
 }
-address Hash(keytype K)
-{
-  return &K;
-}
 void Insert(HashMap *M, keytype key, valuetype value)
 {
-  int Count = M->Count;
-  infotype infotype;
-  infotype.key = key;
-  infotype.value = value;
-  M->Elements[Count + 1] = infotype;
-  M->Count++;
+  address h = Hash(key);
+  if (M->Elements[h].key == key)
+  {
+    M->Elements[h].value = value;
+    return;
+  }
+  if (M->Elements[h].key == Undefined)
+  {
+    M->Elements[h].key = key;
+    M->Elements[h].value = value;
+    M->Count++;
+    return;
+  }
+  for (int i = 0; i < MaxEl; i++)
+  {
+    address a = Hash(i + h);
+
+    if (M->Elements[a].key == key)
+    {
+      M->Elements[a].value = value;
+      return;
+    }
+    if (M->Elements[a].key == Undefined)
+    {
+      M->Elements[a].key = key;
+      M->Elements[a].value = value;
+      M->Count++;
+      return;
+    }
+  }
 }
 
 void printHashMap(HashMap M)
