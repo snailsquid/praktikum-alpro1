@@ -73,6 +73,33 @@ void printHashMap(HashMap M)
     printf("%d:\n  Key: %d\n  Value: %d\n", i, it.key, it.value);
   }
 }
+void Delete(HashMap *M, keytype k)
+{
+  address h = Hash(k);
+  if (M->Elements[h].key == k)
+  {
+    M->Elements[h].key = Undefined;
+    return;
+  }
+  if (M->Elements[h].key == Undefined)
+  {
+    return;
+  }
+  for (int i = 0; i < MaxEl; i++)
+  {
+    address a = Hash(i + h);
+
+    if (M->Elements[a].key == k)
+    {
+      M->Elements[a].key = Undefined;
+      return;
+    }
+    if (M->Elements[a].key == Undefined)
+    {
+      return;
+    }
+  }
+}
 // int main()
 // {
 //   HashMap M;

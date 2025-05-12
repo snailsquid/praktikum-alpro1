@@ -15,17 +15,15 @@ Map *create_map(int capacity)
 }
 bool map_insert(Map *map, int key, const char *value)
 {
-  if (map->size >= map->capacity)
-  {
+  if (map == NULL || value == NULL)
     return false;
-  }
 
   for (int i = 0; i < map->size; i++)
   {
     if (map->entries[i].key == key)
     {
       free(map->entries[i].value);
-      map->entries[i].value = malloc(strlen(value));
+      map->entries[i].value = malloc(strlen(value) + 1);
       if (map->entries[i].value == NULL)
         return false;
       strcpy(map->entries[i].value, value);
@@ -33,14 +31,13 @@ bool map_insert(Map *map, int key, const char *value)
     }
   }
 
-  int index = map->size;
-  map->entries[index].key = key;
-
   if (map->size >= map->capacity)
     return false;
 
+  int index = map->size;
+  map->entries[index].key = key;
   map->entries[index].value = malloc(strlen(value) + 1);
-  if (map->entries == NULL)
+  if (map->entries[map->size].value == NULL)
     return false;
   strcpy(map->entries[index].value, value);
   map->size++;

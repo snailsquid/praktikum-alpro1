@@ -55,6 +55,13 @@ boolean IsMember(Set S, int Elmt)
   return false;
 }
 
+void printSet(Set *s)
+{
+  for (int i = 0; i < s->Count; i++)
+  {
+    printf("[%d] %d\n", i, s->Elements[i]);
+  }
+}
 // int main()
 // {
 //   Set s;
@@ -67,18 +74,12 @@ boolean IsMember(Set S, int Elmt)
 //   Insert(&s, 4);
 //   Delete(&s, 2);
 //   Insert(&s, 3);
-//   for (int i = 0; i < s.Count; i++)
-//   {
-//     printf("[%d] %d\n", i, s.Elements[i]);
-//   }
-//   if (IsFull(s))
-//   {
-//     printf("full");
-//   }
-//   else
-//     printf("not full");
-//   if (IsMember(s, 5))
-//     printf("5 is member");
-//   else
-//     printf("5 is not member");
+//   printSet(&s);
+//   Insert(&s, 9);
+//   printSet(&s);
+//   Delete(&s, 3);
+//   printSet(&s);
+//   Insert(&s, 3);
+//   Insert(&s, 3);
+//   printSet(&s);
 // }
